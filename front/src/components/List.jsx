@@ -1,12 +1,7 @@
-import './List.css'
-import { useEffect, useState } from 'react'
 import { Trash2, PencilLine } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import './List.css'
 
-export function List() {
-    const [users, setUsers] = useState([])
-
-    const navigate = useNavigate()
+export function List({ users, setUsers }) {
 
     const handleDeleteUser = async (id) => {
         try {
@@ -18,8 +13,8 @@ export function List() {
                 throw new Error('Erro ao deletar usuário')
             }
 
-            const data = await response.json()
-            console.log('Usuário deletado:', data)
+            await response.json()
+            console.log('Usuário deletado:', id)
 
             setUsers(users.filter(user => user.id !== id))
         } catch (error) {
@@ -30,13 +25,6 @@ export function List() {
     const openEditUser = (id) => {
         navigate(`/edit/${id}`)
     }
-
-    useEffect(() => {
-        fetch('http://localhost:3000/usuarios')
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error('Erro ao buscar usuários:', error))
-    }, [])
 
     return (
         <table className='table table-hover border rounded-3'>

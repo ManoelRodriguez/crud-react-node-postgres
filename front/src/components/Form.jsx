@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Form.css'
 
-export function Form() {
+export function Form({ onNewUser }) {
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [idade, setIdade] = useState('')
@@ -10,7 +10,7 @@ export function Form() {
         const payload = {
             nome: formData.nome,
             email: formData.email,
-            idade: formData.idade,
+            idade: Number(formData.idade),
         }
 
         try {
@@ -22,16 +22,16 @@ export function Form() {
                 body: JSON.stringify(payload),
             })
 
-            if (!response.ok) {
-                throw new Error('Erro na requisição')
-            }
+            if (!response.ok) throw new Error('Erro na requisição')
 
             const data = await response.json()
-            console.log('Resposta da API:', data)
+            console.log('Usuário criado:', data)
+
+            onNewUser(data) // 👈 atualiza a lista no componente pai
+
             setNome('')
             setEmail('')
             setIdade('')
-
         } catch (error) {
             console.error('Erro ao enviar os dados:', error)
         }
@@ -39,34 +39,28 @@ export function Form() {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        handleSubmit({ nome, email, idade }) // passa os dados para o App
+        handleSubmit({ nome, email, idade })
     }
 
     return (
         <form onSubmit={onSubmit}>
             <input
                 type="text"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
+                className="form-control"
                 placeholder="Nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
             />
             <input
                 type="email"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
+                className="form-control"
                 placeholder="E-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <input
                 type="number"
-                class="form-control"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
+                className="form-control"
                 placeholder="Idade"
                 value={idade}
                 onChange={(e) => setIdade(e.target.value)}
