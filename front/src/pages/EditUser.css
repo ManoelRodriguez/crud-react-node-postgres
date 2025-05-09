@@ -1,0 +1,15 @@
+.edit-user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    
+}
+
+.edit-title{
+    margin-top:50px;
+}
+
+.edit-form{
+    width: 50%
+}

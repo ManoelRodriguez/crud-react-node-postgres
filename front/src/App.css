@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 100vh;
+}
+.input-section {
+    padding: 20px;
+    width: 40%;
+  }
+  
+  .list-section {
+    padding: 20px;
+    width: 60%;
+
+    display:flex;
+    align-items: center;
+  }
